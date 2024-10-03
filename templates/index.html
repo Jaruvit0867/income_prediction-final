@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Lung Cancer</title>
+</head>
+<body>
+    <h1>ทำนายความเสี่ยงของมะเร็งปอด</h1>
+
+    <form action="/predict" method="POST">
+        <!-- ฟิลด์สำหรับใส่อายุ -->
+        <label for="age">อายุ:</label>
+        <input type="number" id="age" name="age" required><br>
+
+        <!-- ฟิลด์สำหรับเลือกเพศ -->
+        <label for="gender">เพศ:</label>
+        <select id="gender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br>
+
+        <!-- เปลี่ยนเป็น dropdown bar สำหรับการเลือกใช่/ไม่ใช่ -->
+        <label for="smoking">สูบบุหรี่:</label>
+        <select id="smoking" name="smoking" required>
+            <option value="1">No</option>
+            <option value="2">Yes</option>
+        </select><br>
+
+        <label for="yellow_fingers">นิ้วเหลือง:</label>
+        <select id="yellow_fingers" name="yellow_fingers" required>
+            <option value="1">No</option>
+            <option value="2">Yes</option>
+        </select><br>
+
+        <label for="anxiety">กังวล:</label>
+        <select id="anxiety" name="anxiety" required>
+            <option value="1">No</option>
+            <option value="2">Yes</option>
+        </select><br>
+
+        <label for="peer_pressure">แรงกดดันจากคนรอบข้าง:</label>
+        <select id="peer_pressure" name="peer_pressure" required>
+            <option value="1">No</option>
+            <option value="2">Yes</option>
+        </select><br>
+
+        <label for="chronic_disease">โรคเรื้อรัง:</label>
+        <select id="chronic_disease" name="chronic_disease" required>
+            <option value="1">No</option>
+            <option value="2">Yes</option>
+        </select><br>
+
+        <!-- ปุ่มทำนาย -->
+        <button type="submit">Predict</button>
+    </form>
+
+    <!-- แสดงผลลัพธ์การทำนาย -->
+    {% if prediction %}
+    <h2>ผลการทำนาย: {{ prediction }}</h2>
+    {% endif %}
+
+    <!-- แสดงข้อมูลจาก dataset -->
+    <h3>ข้อมูลทั้งหมดจาก Dataset</h3>
+    <table border="1">
+        <tr>
+            <th>อายุ</th>
+            <th>เพศ</th>
+            <th>สูบบุหรี่</th>
+            <th>นิ้วเหลือง</th>
+            <th>กังวล</th>
+            <th>แรงกดดันจากคนรอบข้าง</th>
+            <th>โรคเรื้อรัง</th>
+            <th>มะเร็งปอด</th>
+        </tr>
+        {% for record in data %}
+        <tr>
+            <td>{{ record['AGE'] }}</td>
+            <td>{{ record['GENDER'] }}</td>
+            <td>{{ record['SMOKING'] }}</td>
+            <td>{{ record['YELLOW_FINGERS'] }}</td>
+            <td>{{ record['ANXIETY'] }}</td>
+            <td>{{ record['PEER_PRESSURE'] }}</td>
+            <td>{{ record['CHRONIC DISEASE'] }}</td>
+            <td>{{ record['LUNG_CANCER'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <style>
+        h1, h2, h3 {
+            text-align: center;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 20px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        
+        }
+        button {
+            background-color: #28a745;
+            width: 100%;
+            padding: 10px;
+            background-color: #5956e9;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4744c2;
+        }
+        table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+        }
+        th, td {
+            padding: 8px;
+        }
+    </style>
+
+</body>
+</html>
